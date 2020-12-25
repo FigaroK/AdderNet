@@ -91,8 +91,8 @@ def test():
             images, labels = Variable(images).cuda(), Variable(labels).cuda()
             output = net(images)
             avg_loss += criterion(output, labels).sum()
-            pred = output.data.max(1)[1]
-            total_correct += pred.eq(labels.data.view_as(pred)).sum()
+            pred = output.data.max(1)[1] # 1 为C通道,max函数在给定维度时，会返回（values， indices）
+            total_correct += pred.eq(labels.data.view_as(pred)).sum() # 
  
     avg_loss /= len(data_test)
     acc = float(total_correct) / len(data_test)
